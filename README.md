@@ -66,6 +66,46 @@ No API keys to manage on the client side. No manual position math. No copy-pasti
 
 ---
 
+## 📈 Build Waves
+
+The project was built in three progressive waves — from a read-only dashboard to a fully executable on-chain hedge terminal.
+
+### 🔷 Wave 3 — Wallet + SoDEX Execution + Persistence (Current)
+
+| Area | What was added |
+|------|---------------|
+| **SoDEX Integration** | Client-side SDK (`ensureNetwork`, `prepareOrder`, `signTypedData`, `submitSignedOrder`), server-side order builder + EIP-712 signing helpers, signature verification via `ethers.verifyTypedData` |
+| **Wallet Connectivity** | `WalletGate` component (blocks page until connected), `WalletMenu` (disconnect, address display), MetaMask chain switching to ValueChain testnet |
+| **Portfolio Tracking** | Portfolio panel showing SoDEX open positions, P&L, liquidation prices, leverage, account equity, and trade history |
+| **Execution Flow** | Full 3-step `TradeModal`: prepare → sign (MetaMask EIP-712) → submit to SoDEX gateway, with market/limit orders, TP/SL brackets, cross/isolated margin, and half-Kelly sizing hints |
+| **Persistence** | Upstash Redis trade + signal archiving with in-memory fallback; client-side archive helpers |
+| **SSR Error Handling** | Process-level error capture (`uncaughtExceptionMonitor`, `unhandledRejection`), h3-swallowed error debug pages, global error stashing with 5-second TTL |
+| **Vercel Deployment** | Nitro preset to `vercel`, framework pinned to `tanstack-start`, native `keccak256` addon replaced with pure-JS `@noble/hashes` for Lambda compatibility |
+
+### 🟨 Wave 2 — AI Intelligence + Risk Management
+
+| Area | What was added |
+|------|---------------|
+| **Groq AI Analysis** | System prompt engineering for hedge JSON output, `analyzeMarket` with structured `MarketSignal` (direction, hedgeRatio, confidence, rationale, factorWeights, TP/SL), rate-limited Groq proxy (25 req/min) with exponential backoff on 429s |
+| **Risk Controls** | `computeHedge` (multiplies spot exposure by hedge ratio), `halfKellySize` (Kelly Criterion: `f* = 0.5 × (p×b − q)/b`), `maxSafeLeverage` (capped at 5x), minimum notional check ($10), risk-reward + liquidation warnings |
+| **AI Chat** | `AskAI` widget with message history, bot/user bubbles, freeform LLM answers (< 120 words) powered by same Groq proxy |
+| **Live Pricing** | `PriceTicker` in dashboard header with 30s polling from CoinGecko + Binance fallback |
+| **Signal Enhancements** | Factor breakdown bars (name + weight + impact), momentum overlay (14d), risk warning alerts, AI rationale text |
+
+### 🟩 Wave 1 — Foundation (Read-Only Dashboard)
+
+| Area | What was added |
+|------|---------------|
+| **Data Ingestion** | SoSoValue ETF flow API proxy (`/api/sosovalue`) — daily net flows, cumulative flows for BTC and ETH |
+| **Flow Statistics** | `flowAnalyzer` computes 7d/30d net totals, outflow streaks, pressure classification (5 levels from HIGH_OUTFLOW to HIGH_INFLOW), normalized momentum |
+| **Visualization** | Recharts `TradingChart` (daily flow bar chart with hedge ratio overlay), `PriceFlowChart` (cumulative area chart with gradient fill), `NewsFeed` (CryptoPanic news with sentiment dots) |
+| **Signal Display** | `SignalPanel` showing hedge ratio, asset, confidence, momentum, factor breakdown, risk warnings |
+| **Landing Page** | Full marketing site with Hero (animated floating keywords, live badge, stats), Features cards, How It Works steps, FAQ accordion, CTA |
+| **Dashboard Shell** | Two-column layout (signal/charts left, portfolio/news/AI right), asset toggle (BTC/ETH), auto-refresh every 10 minutes, sessionStorage caching (15-min TTL) |
+| **UI Framework** | shadcn/ui New York style with Tailwind v4, Radix primitives (52 components), oklch dark theme, fluid typography |
+
+---
+
 ## 🚀 Quick Start
 
 ### Prerequisites

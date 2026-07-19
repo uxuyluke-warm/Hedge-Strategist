@@ -16,7 +16,7 @@
 
 <br/>
 
-[![GitHub](https://img.shields.io/badge/📦%20GitHub-uxuyluke--warm/Hedge--Strategist-181717?style=for-the-badge)](https://github.com/uxuyluke-warm/Hedge-Strategist.git)
+[![GitHub](https://img.shields.io/badge/GitHub-uxuyluke--warm%2FHedge--Strategist-181717?style=for-the-badge)](https://github.com/uxuyluke-warm/Hedge-Strategist.git)
 [![Testnet](https://img.shields.io/badge/⛓%20SoDEX-Testnet-00C2FF?style=for-the-badge)](https://sodex.com)
 [![Buildathon](https://img.shields.io/badge/🏆%20SoSoValue-Buildathon%202026-purple?style=for-the-badge)](https://sosovalue.com)
 [![Groq](https://img.shields.io/badge/⚡%20Groq-Llama%203.3%2070B-FCE570?style=for-the-badge)](https://groq.com)

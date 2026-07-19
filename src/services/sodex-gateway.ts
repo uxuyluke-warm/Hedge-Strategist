@@ -1,9 +1,7 @@
 // Shared SoDEX gateway helper (server-side)
 
-import { createRequire } from "node:module";
-
-const require = createRequire(import.meta.url);
-const keccak256: (buf: Buffer) => Buffer = require("keccak256");
+import { keccak_256 } from "@noble/hashes/sha3";
+import { bytesToHex } from "@noble/hashes/utils";
 
 export const SODEX_PERPS_API = "https://testnet-gw.sodex.dev/api/v1/perps";
 export const SODEX_CHAIN_ID = 138565; // testnet
@@ -100,7 +98,7 @@ export const EIP712_TYPES = {
 
 export function computePayloadHash(payload: Record<string, unknown>): string {
   const json = JSON.stringify(payload);
-  return "0x" + keccak256(Buffer.from(json)).toString("hex");
+  return "0x" + bytesToHex(keccak_256(new TextEncoder().encode(json)));
 }
 
 // Convert USD notional to base asset quantity, rounded to step size.

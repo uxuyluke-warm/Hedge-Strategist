@@ -27,6 +27,9 @@ dist-ssr
 # Workspace
 .workspace/
 
+# Vercel build output
+.vercel/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

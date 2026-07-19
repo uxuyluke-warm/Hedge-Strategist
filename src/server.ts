@@ -28,8 +28,12 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
   const body = await response.clone().text();
   if (!isH3SwallowedErrorBody(body)) return response;
 
-  console.error(consumeLastCapturedError() ?? new Error(`h3 swallowed SSR error: ${body}`));
-  return new Response(renderErrorPage(), {
+  const captured = consumeLastCapturedError();
+  const debugError = captured ?? new Error(`h3 swallowed SSR error: ${body}`);
+  console.error(debugError);
+  const msg = debugError instanceof Error ? debugError.message : String(debugError);
+  const stack = debugError instanceof Error ? (debugError as Error).stack ?? "" : "";
+  return new Response(`<!doctype html><html><head><title>SSR Debug (h3 swallowed)</title><meta charset="utf-8"/><style>body{font:14px/1.6 monospace;background:#111;color:#eee;padding:2rem}h1{color:#f87171}pre{background:#1e1e1e;padding:1rem;border-radius:8px;overflow-x:auto;white-space:pre-wrap;word-break:break-all}</style></head><body><h1>SSR Error (h3 swallowed)</h1><p><strong>Message:</strong> ${msg.replace(/</g, "&lt;")}</p><pre>${stack.replace(/</g, "&lt;")}</pre><p>h3 body: ${body.replace(/</g, "&lt;")}</p></body></html>`, {
     status: 500,
     headers: { "content-type": "text/html; charset=utf-8" },
   });
@@ -44,6 +48,30 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+function renderDebugErrorPage(error: unknown): string {
+  const msg = error instanceof Error ? error.message : String(error);
+  const stack = error instanceof Error ? error.stack ?? "" : "";
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>SSR Debug Error</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body { font: 14px/1.6 monospace; background: #111; color: #eee; padding: 2rem; }
+      h1 { color: #f87171; }
+      pre { background: #1e1e1e; padding: 1rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+    </style>
+  </head>
+  <body>
+    <h1>SSR Error (debug)</h1>
+    <p><strong>Message:</strong> ${msg.replace(/</g, "&lt;")}</p>
+    <pre>${stack.replace(/</g, "&lt;")}</pre>
+    <p>Node: ${typeof process !== "undefined" ? process.version : "N/A"}</p>
+  </body>
+</html>`;
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
@@ -52,7 +80,7 @@ export default {
       return await normalizeCatastrophicSsrResponse(response);
     } catch (error) {
       console.error(error);
-      return new Response(renderErrorPage(), {
+      return new Response(renderDebugErrorPage(error), {
         status: 500,
         headers: { "content-type": "text/html; charset=utf-8" },
       });

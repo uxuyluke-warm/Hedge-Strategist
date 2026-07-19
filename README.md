@@ -107,9 +107,6 @@ Open `http://localhost:3000` (or whatever the terminal shows).
 |-----|----------|---------|
 | `SOSOVALUE_API_KEY` | ✅ | Live ETF flow data |
 | `GROQ_API_KEY` | ✅ | AI analysis (Llama 3.3 70B) |
-| `SODEX_RPC_URL` | ❌ | Defaults to testnet gateway |
-| `UPSTASH_REDIS_REST_URL` | ❌ | Trade history persistence (in-memory fallback) |
-| `UPSTASH_REDIS_REST_TOKEN` | ❌ | Upstash Redis auth |
 
 > **Security:** All keys are server-side only (Nitro SSR) — never bundled to the browser.
 

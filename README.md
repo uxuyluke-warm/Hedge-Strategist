@@ -106,6 +106,26 @@ The project was built in three progressive waves — from a read-only dashboard 
 
 ---
 
+## 👥 Team
+
+This project was built for the SoSoValue Buildathon 2026. Contributions and new members are welcome.
+
+**Stack coverage expected:**
+
+| Area | Skills |
+|------|--------|
+| **Frontend** | React 19, TanStack Router, Tailwind v4, shadcn/ui, Recharts |
+| **SSR / Backend** | TanStack Start, Nitro, Vercel serverless functions |
+| **AI / LLM** | Groq API, prompt engineering for structured JSON output, rate-limit design |
+| **Blockchain / DeFi** | EIP-712 typed data signing, ethers.js, MetaMask integration, perpetual swap mechanics |
+| **Data** | REST API integration (SoSoValue ETF flows, Binance price feeds, CryptoPanic news) |
+| **Persistence** | Upstash Redis, in-memory fallback patterns |
+| **DevOps** | Vercel deployment, Nitro SSR error debugging, native module compatibility |
+
+**Mindset:** Comfortable moving between UI polish, server-side logic, smart contract data flows, and LLM prompt tuning — the stack touches all of them.
+
+---
+
 ## 🚀 Quick Start
 
 ### Prerequisites

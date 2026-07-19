@@ -3,6 +3,28 @@ import "./lib/error-capture";
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
 
+// Process-level capture for errors that escape normal try-catch chains
+// (e.g. secondary throws inside seroval serialization in TanStack Start's catch block)
+let processCapturedError: unknown | undefined;
+if (typeof process !== "undefined") {
+  const _process = process;
+  if (_process.listeners) {
+    // Only register if not already registered
+    if (_process.listeners("uncaughtExceptionMonitor").length === 0) {
+      _process.on("uncaughtExceptionMonitor", (err) => {
+        processCapturedError = err;
+        console.error("[server.ts] uncaughtExceptionMonitor:", err);
+      });
+    }
+    if (_process.listeners("unhandledRejection").length === 0) {
+      _process.on("unhandledRejection", (reason) => {
+        processCapturedError = reason;
+        console.error("[server.ts] unhandledRejection:", reason);
+      });
+    }
+  }
+}
+
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
 };

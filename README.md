@@ -108,6 +108,30 @@ The project was built in three progressive waves — from a read-only dashboard 
 
 ---
 
+## 🗺️ Milestones
+
+### 🔷 Wave 4 — Multi-Exchange + Real Funds
+
+| Area | Target |
+|------|--------|
+| **Exchanges** | dYdX, Hyperliquid, Vertex integrations |
+| **Real Funds** | Production wallet with risk limits, position sizing guards, circuit breakers |
+| **Backtesting** | Historical ETF flow replay against price data to validate hedge signals |
+| **Portfolio Rebalancing** | Periodic AI re-evaluation of open positions with automated adjustment |
+| **Advanced Orders** | Trailing stops, OCO (one-cancels-other), TWAP execution |
+
+### 🔷 Wave 5 — Autonomous + Social
+
+| Area | Target |
+|------|--------|
+| **Autonomous Mode** | Trustless automated execution — user sets parameters, system runs the hedge loop |
+| **Social Trading** | Share signals publicly, copy-trade top strategists, leaderboard |
+| **Mobile** | React Native or PWA with wallet connect |
+| **Multi-Asset** | Equity, commodity, and forex ETFs beyond BTC/ETH |
+| **On-Chain Audit Trail** | All signals and trades published to IPFS or Arweave for transparency |
+
+---
+
 ## 👥 Team
 
 This project was built for the SoSoValue Buildathon 2026. Contributions and new members are welcome.

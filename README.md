@@ -10,6 +10,8 @@
           ⚡ AI Hedge Strategist
 </pre>
 
+**Product Category:** DeFi · AI Trading Assistant · Perpetual Hedging
+
 **SoSoValue ETF Flows → Groq AI Analysis → EIP-712 Sign → SoDEX Perp Order**
 
 *From institutional data to on-chain hedge. In one click.*
